@@ -1,0 +1,36 @@
+services:
+    postgres:
+        container_name: StudentManagementSystemPostgres
+        image: postgres
+        environment:
+            POSTGRES_USER: patryk
+            POSTGRES_PASSWORD: password
+            PGDATA: /data/StudentManagementSystem
+        ports:
+            - "5432:5432"
+        networks:
+            - postgres
+        restart: unless-stopped
+        volumes:
+            - postgres:/data/postgres
+    pgadmin:
+        container_name: StudentManagementSystemPgadmin
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: pgadmin4@gmail.com
+            PGADMIN_DEFAULT_PASSWORD: password
+            PGADMIN_CONFIG_SERVER_MODE: 'False'
+        ports:
+           - "5000:80"
+        networks:
+            - postgres
+        restart: unless-stopped
+        volumes:
+            - pgadmin:/var/lib/StudentManagementSystem
+
+networks:
+    postgres:
+        driver: bridge
+volumes:
+    postgres:
+    pgadmin:
